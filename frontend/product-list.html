@@ -8,15 +8,25 @@
 
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/product-list.css" />
+    <script>
+      let q = "shirt";
+      document.getElementById(
+        "product-query"
+      ).innerHTML = `<span id="product-query">${q}</span>`;
+    </script>
   </head>
+
   <body>
-    <nav class="navbar"></nav>
+    <nav id="navbar"></nav>
 
     <section class="search-results">
-      <div class="head-sort">
-        <h2 class="heading">search results for <span>product</span></h2>
+      <div class="head-cont">
+        <h2 class="heading">
+          search results for <span id="product-query"></span>
+        </h2>
+  
         <!-- Dropdown for Sort -->
-        <div class="sort-box">
+        <div class="sort-box" style="align-items: right">
           <select name="" id="" class="sort-by">
             <option value="" class="low-high">Sort By</option>
             <option value="" class="low-high">Price Low to High</option>
@@ -24,90 +34,12 @@
           </select>
         </div>
       </div>
-      <div class="product-container">
-        <div class="product-card">
-          <div class="product-image">
-            <img src="img/card1.png" class="product-thumb" alt="" />
-          </div>
-          <div class="product-info">
-            <h2 class="product-brand">BRAND</h2>
-            <p class="product-title">Product title</p>
-            <span class="price">$20</span>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image">
-            <img src="img/card2.png" class="product-thumb" alt="" />
-          </div>
-          <div class="product-info">
-            <h2 class="product-brand">BRAND</h2>
-            <p class="product-title">Product title</p>
-            <span class="price">$20</span>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image">
-            <img src="img/card3.png" class="product-thumb" alt="" />
-          </div>
-          <div class="product-info">
-            <h2 class="product-brand">BRAND</h2>
-            <p class="product-title">Product title</p>
-            <span class="price">$20</span>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image">
-            <img src="img/card4.png" class="product-thumb" alt="" />
-          </div>
-          <div class="product-info">
-            <h2 class="product-brand">BRAND</h2>
-            <p class="product-title">Product title</p>
-            <span class="price">$20</span>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image">
-            <img src="img/card5.png" class="product-thumb" alt="" />
-          </div>
-          <div class="product-info">
-            <h2 class="product-brand">BRAND</h2>
-            <p class="product-title">Product title</p>
-            <span class="price">$20</span>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image">
-            <img src="img/card6.png" class="product-thumb" alt="" />
-          </div>
-          <div class="product-info">
-            <h2 class="product-brand">BRAND</h2>
-            <p class="product-title">Product title</p>
-            <span class="price">$20</span>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image">
-            <img src="img/card7.png" class="product-thumb" alt="" />
-          </div>
-          <div class="product-info">
-            <h2 class="product-brand">BRAND</h2>
-            <p class="product-title">Product title</p>
-            <span class="price">$20</span>
-          </div>
-        </div>
-        <div class="product-card">
-          <div class="product-image">
-            <img src="img/card8.png" class="product-thumb" alt="" />
-          </div>
-          <div class="product-info">
-            <h2 class="product-brand">BRAND</h2>
-            <p class="product-title">Product title</p>
-            <span class="price">$20</span>
-          </div>
-        </div>
-      </div>
+
+      <div class="product-container" id="product-list-div"></div>
     </section>
 
     <script src="js/nav.js"></script>
+    <script src="js/product-list.js"></script>
+    <!-- <script src="js/index.js"></script> -->
   </body>
 </html>

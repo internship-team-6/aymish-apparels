@@ -74,15 +74,23 @@
     justify-content: center;
     list-style: none;
     border-top: 1px solid #d1d1d1;
+    border-bottom: 1px solid #d1d1d1;
+    position: relative;
+    background: #383838;
 }
 
 #catm, #catw, #cat1{
     padding: 10px 30px;
+    text-align: center;
     margin: 5px;
-    border: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
-
+#catm, #catw, #cat1::-ms-expand {
+    display: none;
+}
 .link-item:hover ul {
     display: block;
 }

@@ -31,7 +31,7 @@
 
 .search {
     width: 500px;
-    display: flex;
+    display: block;
 }
 
 .search-box {
@@ -48,7 +48,6 @@
 }
 
 .search-btn {
-    width: 20%;
     height: 40px;
     padding: 10px 20px;
     border: none;
@@ -67,7 +66,8 @@
 
 }
 
-.links-container {
+
+.cat{
     width: 100%;
     display: flex;
     padding: 10px 10vw;
@@ -76,9 +76,12 @@
     border-top: 1px solid #d1d1d1;
 }
 
-.link-item {
-    padding: 10px 70px;
+#catm, #catw, #cat1{
+    padding: 10px 30px;
+    margin: 5px;
+    border: none;
 }
+
 
 .link-item:hover ul {
     display: block;

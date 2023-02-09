@@ -1,11 +1,11 @@
 import psycopg
+from psycopg.rows import dict_row
 import yaml
 from yaml.loader import SafeLoader
 
 
 class DB_Auth:
     def __init__(self):
-        # Open the file and load the file
         config_file = "./.config/db/config.yaml"
         with open(config_file) as cf:
             conn_dict = yaml.load(cf, Loader=SafeLoader)
@@ -17,7 +17,8 @@ class DB_Auth:
                 conn_dict["user"],
                 conn_dict["password"],
                 conn_dict["port"],
-            )
+            ),
+            row_factory=dict_row,
         )
         print("conn created")
 

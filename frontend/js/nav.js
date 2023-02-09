@@ -1,6 +1,15 @@
 const searchQuery = function () {
   const q = document.getElementById("searchid").value;
-  location.href = "./search-product-list.html?" + new URLSearchParams({ q: q });
+  location.href =
+    "./search-product-list.html?" + new URLSearchParams({ q: q, page: "1"});
+};
+
+const searchQuerySort = function (sort) {
+  let params = new URLSearchParams(location.search);
+  let q = params.get("q");
+  location.href =
+    "./search-product-list.html?" +
+    new URLSearchParams({ q: q, page: "1", sort: sort.value });
 };
 
 const categorySelect = function (catlevel1Id, catlevel2NameObj) {
@@ -10,10 +19,25 @@ const categorySelect = function (catlevel1Id, catlevel2NameObj) {
     new URLSearchParams({
       catlevel1Id: catlevel1Id,
       catlevel2Name: catlevel2Name,
+      page: "1",
     });
 };
 
-const createNav = function () {
+const categorySelectSort = function (sort) {
+  let params = new URLSearchParams(location.search);
+  let catlevel1Id = params.get("catlevel1Id");
+  let catlevel2Name = params.get("catlevel2Name");
+  location.href =
+    "./category-product-list.html?" +
+    new URLSearchParams({
+      catlevel1Id: catlevel1Id,
+      catlevel2Name: catlevel2Name,
+      page: "1",
+      sort: sort.value
+    });
+}
+
+const navbarFunction = function () {
   let nav = document.querySelector("#navbar");
   nav.innerHTML = `
     <div class="nav">
@@ -21,15 +45,23 @@ const createNav = function () {
       <div class="nav-items">
         <div class="search">
           <form class="form-bar">
-            <input type="text" class="search-box" id="searchid" placeholder="search brand, product" />
+            <input type="text" class="search-box" id="searchid" placeholder="search brand, product"/>
             <button class="search-btn" type="button" onclick="searchQuery()">search</button>
           </form>
         </div>
+        
       </div>
     </div>
     <div class="cat" id="cat-level-1">
     </div>
     `;
+  let searchIdInput = document.getElementById("searchid");
+  searchIdInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      searchQuery();
+    }
+  });
   fetch("http://localhost:5000/navbar", {
     method: "GET",
     mode: "cors",
@@ -81,36 +113,4 @@ const createNav = function () {
     });
 };
 
-onload = createNav();
-
-// function passProdDet(prodTitle, prodImg, prodPrice) {
-//   return `<div class="product-container" id="product-list-div">
-//       <div class="product-card">
-//           <div class="product-image">
-//             <img src="${prodImg}" class="product-thumb" alt="" />
-//           </div>
-//           <div class="product-info">
-//             <p class="product-title">${prodTitle}</p>
-//             <span class="price">$${prodPrice}</span>
-//           </div>
-//         </div>
-//         </div>`;
-// }
-
-{
-  /* <ul class="links-container">
-        <li class="link-item">
-          <a href="#" class="link">MEN</a>
-          <ul class="cat-level2">
-            <li><a href="#">shirts</a></li>
-          </ul>
-        </li>
-
-        <li class="link-item">
-          <a href="#" class="link">MEN</a>
-          <ul class="cat-level2">
-            <li><a href="#">shirts</a></li>
-          </ul>
-        </li>
-      </ul> */
-}
+onload = navbarFunction();

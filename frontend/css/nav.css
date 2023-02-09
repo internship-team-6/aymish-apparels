@@ -53,16 +53,17 @@
     border: none;
     outline: none;
     cursor: pointer;
-    background: #383838;
-    color: #fff;
+    background: rgba(191, 97, 106, 0.7);
+    color: #000000;
     text-transform: capitalize;
-    font-size: 15px;
+    font-size: 16px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 
 .search-box::placeholder {
     color: #a9a9a9;
+    font-size: 16px;
 
 }
 
@@ -76,49 +77,31 @@
     border-top: 1px solid #d1d1d1;
     border-bottom: 1px solid #d1d1d1;
     position: relative;
-    background: #383838;
+    background: rgba(191, 97, 106, 0.7)
 }
 
-#catm, #catw, #cat1{
+#cat-level-1 select{
+    padding: 10px 30px;
+    text-align: center;
+    margin: 5px;
+    border: 1px solid rgba(191, 97, 106, 0.7);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: medium;
+    text-transform: capitalize;
+    appearance: none;
+}
+
+#cat-level-1 select option{
     padding: 10px 30px;
     text-align: center;
     margin: 5px;
     border: 1px solid black;
     border-radius: 10px;
     cursor: pointer;
-}
-
-#catm, #catw, #cat1::-ms-expand {
-    display: none;
-}
-.link-item:hover ul {
-    display: block;
-}
-
-.cat-level2{
-    list-style: none;
-    display: none;
-    position: absolute;
-    background-color: #f5f5f5;
-    border-radius: 10px;
-}
-
-.cat-level2 li {
-    width: 180px;
-    position: relative;
-    padding: 20px;
-}
-
-.cat-level2 li a {
-    text-decoration: none;
-    color: #7a7a7a;
-    padding: 8px 14px;
-}
-
-.cat-level2 li a:hover {
-    background-color: #fff;
-}
-
+    font-size: medium;
+    text-transform: capitalize;
+} 
 
 .link {
     text-transform: capitalize;

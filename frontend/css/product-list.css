@@ -1,73 +1,87 @@
+#path {
+    padding-top: 20px;
+    padding-left: 100px;
+    padding-bottom: 5px;
+}
+
 .search-results {
     width: 100%;
-    padding: 60px 0;
+    padding: 10px 0;
 }
 
 .heading {
     font-size: 20px;
     text-transform: capitalize;
     font-weight: 400;
-    margin: 10px 20px;
-    padding: 10px 10vw;
 }
 
 .head-cont {
     display: flex;
-    margin-left: auto;
-}
-
-.sort-box {
-    margin: 10px;
-    padding: 0 10vw;
-    margin-left: 300px;
-    position: relative;
-    right: 0;
-}
-
-.sort-by {
-    display: inline-block;
-    right: 0;
-    text-align: center;
-}
-
-.sort-box select {
-    padding: 5px 15px;
-    height: 42px;
-    line-height: 22px;
-    font-size: 16px;
-
-    border: 2px solid #ccc;
-    border-radius: 10px;
-}
-
-.sort-box:after {
-    position: absolute;
-    top: 50%;
-    margin-top: -4px;
-    border-top: 8px solid #ccc;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
+    justify-content: left;
+    margin-left: 100px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    
 }
 
 .heading span {
     font-weight: 700;
 }
 
-.product-container {
-    /* display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    height: auto;
-    grid-row-gap: 40px;
-    grid-column-gap: 40px;
-    margin-left: 20px; */
+.sort-box {
+    padding-left: 850px;
+}
 
+.sort-box select {
+    padding: 0 15px;
+    height: 35px;
+    line-height: 22px;
+    font-size: 14px;
+    display: inline-block;
+    right: 0;
+    text-align: center;
+    border: 1px solid #383838;
+    border-radius: 10px;
+}
+
+.product-container {
     display: grid;
     grid-template-columns: auto auto auto;
     grid-gap: 10px;
-    padding: 10px 50px;
+    padding: 0 50px;
 }
 
 .product-card {
-    cursor: pointer;      
+    cursor: pointer; 
+    margin-bottom: 20px;
 }
+
+.product-title, .price{
+    padding-top: 10px;
+    margin-right: -10px;
+}
+
+#pagination {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+  }
+  
+#pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    margin: 5px;
+    text-decoration: none;
+    border: 0.5px solid rgba(191, 97, 106, 0.7);
+    border-radius: 5px;
+}
+
+#pagination a.active {
+    background-color: rgba(191, 97, 106, 0.7);
+    color: white;
+  }
+
+#pagination a:hover:not(.active) {background-color: #ddd;}
+  
 

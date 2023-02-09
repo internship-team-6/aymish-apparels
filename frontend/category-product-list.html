@@ -4,25 +4,31 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Search Results</title>
+    <title id="cat-title"></title>
     <link rel="stylesheet" href="css/home.css" />
     <link rel="stylesheet" href="css/product-list.css" />
-    <link rel="stylesheet" href="css/footer.css">
   </head>
 
   <body>
     <nav id="navbar"></nav>
+    <div id="path"></div>
     <section class="search-results">
       <div class="head-cont">
         <h2 class="heading">
           search results for <span id="product-query"></span>
         </h2>
-        <!-- Dropdown for Sort -->
-        <div class="sort-box" style="align-items: right">
-          <select name="" id="" class="sort-by">
-            <option value="" class="low-high">Sort By</option>
+        <div class="sort-box" id="sort-box">
+          <select
+            name=""
+            id="sort-order-id"
+            class="sort-by"
+            onchange="categorySelectSort(this)"
+          >
+            <option value="" class="low-high" selected disabled hidden>
+              Sort By
+            </option>
             <option value="asc" class="low-high">Price Low to High</option>
-            <option value="" class="low-high">Price High to Low</option>
+            <option value="desc" class="low-high">Price High to Low</option>
           </select>
         </div>
       </div>
@@ -31,10 +37,7 @@
     </section>
 
     <div id="pagination"></div>
-
     <script src="js/nav.js"></script>
     <script src="js/category-product-list.js"></script>
-    <script src="js/footer.js"></script>
-    <!-- <script src="js/index.js"></script> -->
   </body>
 </html>

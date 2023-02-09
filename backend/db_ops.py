@@ -1,120 +1,147 @@
 from db_auth import DB_Auth
+from db_statements import DB_Statements
 
 
 class DB_Ops:
     def __init__(self):
         self.db_auth = DB_Auth()
-        self.conn = self.db_auth.conn
+        self.db_statements = DB_Statements()
         id_select_statement = "SELECT {} FROM {}".format("id", "product")
-        self.product_table_select = "SELECT {} FROM {}".format("*", "product")
-        self.category_table_select = "SELECT {} FROM {}".format("*", "category")
-        self.product_table_insert = "INSERT INTO {} ({}, {}, {}, {}, {}, {}, {}) VALUES (%s, %s, %s, %s, %s, %s, %s)".format(
-            "product",
-            "id",
-            "name",
-            "title",
-            "price",
-            "availability",
-            "productDescription",
-            "productImageUrl",
-        )
-        self.category_table_insert = (
-            "INSERT INTO {} ({}, {}, {}) VALUES (%s, %s, %s)".format(
-                "category", "productId", "catlevel2Name", "catlevel1Name"
-            )
-        )
-        self.product_table_update = "UPDATE {} SET ({}, {}, {}, {}, {}, {}) = (%s, %s, %s, %s, %s, %s) WHERE {} = %s".format(
-            "product",
-            "name",
-            "title",
-            "price",
-            "availability",
-            "productDescription",
-            "productImageUrl",
-            "id",
-        )
-        self.category_table_update = (
-            "UPDATE {} SET ({}, {}) = (%s, %s) WHERE {} = %s".format(
-                "category", "catlevel2Name", "catlevel1Name", "productId"
-            )
-        )
-        self.product_table_delete = "DELETE FROM {} WHERE {} = %s".format(
-            "product", "id"
-        )
-        self.category_table_delete = "DELETE FROM {} WHERE {} = %s".format(
-            "category", "productId"
-        )
         self.id_set = set(
-            map(lambda x: x[0], self.conn.execute(id_select_statement).fetchall())
+            map(
+                lambda x: x["id"],
+                self.db_auth.conn.execute(id_select_statement).fetchall(),
+            )
         )
+        max_category_id_select_statement = "SELECT MAX({}) FROM {}".format(
+            "id", "category"
+        )
+        self.cur_category_id = self.db_auth.conn.execute(
+            max_category_id_select_statement
+        ).fetchone()["max"]
+        if self.cur_category_id is None:
+            self.cur_category_id = "1"
+        self.cat_level_1_name_id_map = {}
+
+    def select_cat_level_1_name_id_list_with_subcategories(self):
+        cat_level_1_name_id_list = self.db_auth.conn.execute(
+            self.db_statements.cat_level_1_name_id_list_with_subcategories_select,
+            ("1", "2", ""),
+        ).fetchall()
+        return cat_level_1_name_id_list
+
+    def select_cat_level_2_name_list_parent_id(self, parent_id):
+        cat_level_2_name_list = self.db_auth.conn.execute(
+            self.db_statements.cat_level_2_name_list_with_parent_id_select,
+            (parent_id, ""),
+        ).fetchall()
+        return cat_level_2_name_list
+
+    def select_product_list_with_cat_level_1_id_cat_level_2_name(
+        self, cat_level_1_id, cat_level_2_name
+    ):
+        product_list = self.db_auth.conn.execute(
+            self.db_statements.product_list_with_cat_level_1_id_cat_level_2_name_select,
+            (cat_level_1_id, cat_level_2_name),
+        ).fetchall()
+        return product_list
+
+    def select_product_list_with_cat_level_1_id_cat_level_2_name_price_asc(
+        self, cat_level_1_id, cat_level_2_name
+    ):
+        product_list = self.db_auth.conn.execute(
+            self.db_statements.product_list_with_cat_level_1_id_cat_level_2_name_price_asc_select,
+            (cat_level_1_id, cat_level_2_name),
+        ).fetchall()
+        return product_list
+
+    def select_product_list_with_cat_level_1_id_cat_level_2_name_price_desc(
+        self, cat_level_1_id, cat_level_2_name
+    ):
+        product_list = self.db_auth.conn.execute(
+            self.db_statements.product_list_with_cat_level_1_id_cat_level_2_name_price_desc_select,
+            (cat_level_1_id, cat_level_2_name),
+        ).fetchall()
+        return product_list
+
+    def select_product_list_with_cat_level_1_id_cat_level_2_name_count(
+        self, cat_level_1_id, cat_level_2_name
+    ):
+        count = self.db_auth.conn.execute(
+            self.db_statements.product_list_with_cat_level_1_id_cat_level_2_name_count_select,
+            (cat_level_1_id, cat_level_2_name),
+        ).fetchone()
+        return count
+
+    def select_product_details_from_id(self, product_id):
+        product_details = self.db_auth.conn.execute(
+            self.db_statements.product_details_from_id_select, (product_id,)
+        ).fetchone()
+        return product_details
 
     def id_exists(self, unique_id):
         return unique_id in self.id_set
 
-    def select_products(self):
-        product_select_data = self.conn.execute(self.product_table_select).fetchall()[
-            :5
-        ]
-        return product_select_data
-
-    def select_categories(self):
-        category_select_data = self.conn.execute(self.category_table_select).fetchall()[
-            :5
-        ]
-        return category_select_data
-
-    def insert(self, data):
-        unique_id = data["uniqueId"]
+    def insert_product(self, data):
+        unique_id = data["uniqueId"].strip()
         if self.id_exists(unique_id):
             return False
         product_insert_data = (
             unique_id,
-            data["name"],
-            data["title"],
+            data["name"].strip(),
+            data["title"].strip(),
+            data["productImage"].strip(),
             data["price"],
-            data["availability"],
-            data.get("productDescription", ""),
-            data["productImage"],
+            data.get("productDescription", "").strip(),
+            data["availability"].strip(),
         )
-        category_insert_data = (
-            unique_id,
-            data.get("catlevel2Name", ""),
-            data["catlevel1Name"],
+        self.db_auth.conn.execute(
+            self.db_statements.product_table_insert, product_insert_data
         )
-        self.conn.execute(self.product_table_insert, product_insert_data)
-        self.conn.execute(self.category_table_insert, category_insert_data)
-        self.conn.commit()
+        self.db_auth.conn.commit()
         self.id_set.add(unique_id)
         return True
 
-    def update(self, data):
-        unique_id = data["uniqueId"]
-        if not self.id_exists(unique_id):
-            return self.insert(data)
-        product_update_data = (
-            data["name"],
-            data["title"],
-            data["price"],
-            data["availability"],
-            data.get("productDescription", ""),
-            data["productImage"],
-            unique_id,
+    def increment_category_id(self):
+        self.cur_category_id = str(int(self.cur_category_id) + 1)
+
+    def insert_category_cat_level_1(self, data):
+        name = data["catlevel1Name"].strip()
+        category_cat_level_1_insert_data = (self.cur_category_id, name, "1")
+        self.db_auth.conn.execute(
+            self.db_statements.category_table_cat_level_1_insert,
+            category_cat_level_1_insert_data,
         )
-        category_update_data = (
-            data.get("catlevel2Name", ""),
-            data["catlevel1Name"],
-            unique_id,
-        )
-        self.conn.execute(product_table_update, product_update_data)
-        self.conn.execute(category_table_update, category_update_data)
-        self.conn.commit()
+        self.db_auth.conn.commit()
+        self.cat_level_1_name_id_map[name] = self.cur_category_id
+        self.increment_category_id()
         return True
 
-    def delete(self, unique_id):
-        if not self.id_exists(unique_id):
+    def insert_category_cat_level_2(self, data):
+        cat_level_1_name = data["catlevel1Name"].strip()
+        name = data.get("catlevel2Name", "").strip()
+        parent_id = self.cat_level_1_name_id_map[cat_level_1_name]
+        product_id = data["uniqueId"].strip()
+        category_cat_level_2_insert_data = (
+            self.cur_category_id,
+            name,
+            "2",
+            parent_id,
+            product_id,
+        )
+        self.db_auth.conn.execute(
+            self.db_statements.category_table_cat_level_2_insert,
+            category_cat_level_2_insert_data,
+        )
+        self.db_auth.conn.commit()
+        self.increment_category_id()
+        return True
+
+    def insert(self, data):
+        if not self.insert_product(data):
             return False
-        self.conn.execute(product_table_delete, uniqueId)
-        self.conn.execute(category_table_delete, uniqueId)
-        self.conn.commit()
-        self.id_set.remove(unique_id)
+        name = data["catlevel1Name"].strip()
+        if not self.cat_level_1_name_id_map.get(name, ""):
+            self.insert_category_cat_level_1(data)
+        self.insert_category_cat_level_2(data)
         return True

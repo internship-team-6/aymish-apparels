@@ -13,6 +13,8 @@ class DB_Create:
         self.db_auth.conn.execute(self.db_statements.PRODUCT_TABLE_CREATE)
         self.db_auth.conn.execute(self.db_statements.CATEGORY_TABLE_CREATE)
         self.db_auth.conn.commit()
+        print('product table created')
+        print('category table created')
 
 
 db_create = DB_Create()

@@ -20,7 +20,6 @@ class DB_Auth:
             ),
             row_factory=dict_row,
         )
-        print("conn created")
 
     def __del__(self):
         self.conn.close()

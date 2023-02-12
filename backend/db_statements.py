@@ -1,9 +1,7 @@
 class DB_Statements:
     def __init__(self):
-        self.CATEGORY_TABLE_DROP = "DROP TABLE IF EXISTS category"
-        self.PRODUCT_TABLE_DROP = "DROP TABLE IF EXISTS product"
-        self.PRODUCT_TABLE_CREATE = """
-        CREATE TABLE product
+        self.PRODUCT_TABLE_IF_NOT_EXISTS_CREATE = """
+        CREATE TABLE IF NOT EXISTS product
         (
           id TEXT NOT NULL,
           name TEXT NOT NULL,
@@ -15,8 +13,8 @@ class DB_Statements:
           PRIMARY KEY (id)
         );
         """
-        self.CATEGORY_TABLE_CREATE = """
-        CREATE TABLE category
+        self.CATEGORY_TABLE_IF_NOT_EXISTS_CREATE = """
+        CREATE TABLE IF NOT EXISTS category
         (
           id TEXT NOT NULL,
           name TEXT,

@@ -1,9 +1,11 @@
 from db_auth import DB_Auth
 from db_statements import DB_Statements
+from db_create import DB_Create
 
 
 class DB_Ops:
     def __init__(self):
+        DB_Create()
         self.db_auth = DB_Auth()
         self.db_statements = DB_Statements()
         id_select_statement = "SELECT {} FROM {}".format("id", "product")

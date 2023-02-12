@@ -133,5 +133,5 @@ dmypy.json
 **/.DS_Store
 .vscode
 **/.vscode
-.postgres-data
-.redis-data
+.postgres-data/
+.redis-data/

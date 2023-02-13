@@ -1,43 +1,31 @@
-const searchQuery = function () {
+var connectionParams = {
+  method: "GET",
+  mode: "cors",
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+};
+
+const searchQuery = () => {
   const q = document.getElementById("searchid").value;
-  location.href =
-    "./search-product-list.html?" + new URLSearchParams({ q: q, page: "1"});
+  window.location.href =
+    "./search-product-list.html?" + new URLSearchParams({ q: q, page: 1 });
 };
 
-const searchQuerySort = function (sort) {
-  let params = new URLSearchParams(location.search);
-  let q = params.get("q");
-  location.href =
-    "./search-product-list.html?" +
-    new URLSearchParams({ q: q, page: "1", sort: sort.value });
-};
-
-const categorySelect = function (catlevel1Id, catlevel2NameObj) {
+const categorySelect = (catlevel1Id, catlevel2NameObj) => {
   const catlevel2Name = catlevel2NameObj.value;
-  location.href =
+  window.location.href =
     "./category-product-list.html?" +
     new URLSearchParams({
       catlevel1Id: catlevel1Id,
       catlevel2Name: catlevel2Name,
-      page: "1",
+      page: 1,
     });
 };
 
-const categorySelectSort = function (sort) {
-  let params = new URLSearchParams(location.search);
-  let catlevel1Id = params.get("catlevel1Id");
-  let catlevel2Name = params.get("catlevel2Name");
-  location.href =
-    "./category-product-list.html?" +
-    new URLSearchParams({
-      catlevel1Id: catlevel1Id,
-      catlevel2Name: catlevel2Name,
-      page: "1",
-      sort: sort.value
-    });
-}
-
-const navbarFunction = function () {
+window.onload = (() => {
   let nav = document.querySelector("#navbar");
   nav.innerHTML = `
     <div class="nav">
@@ -62,55 +50,36 @@ const navbarFunction = function () {
       searchQuery();
     }
   });
-  fetch("http://localhost:5000/navbar", {
-    method: "GET",
-    mode: "cors",
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  })
+  fetch("http://localhost:5000/navbar", connectionParams)
     .then((response) => response.json())
     .then((data) => {
-      const categories_arr = data;
-      let cat_level_1 = document.getElementById("cat-level-1");
-      for (let i = 0; i < categories_arr.length; i++) {
-        let catlevel1Name = categories_arr[i]["name"];
-        let catlevel1Id = categories_arr[i]["id"];
-        cat_level_1.innerHTML += `
+      const categoriesArr = data;
+      let catLevel1 = document.getElementById("cat-level-1");
+      for (let counter = 0; counter < categoriesArr.length; counter++) {
+        let catlevel1Name = categoriesArr[counter]["name"];
+        let catlevel1Id = categoriesArr[counter]["id"];
+        catLevel1.innerHTML += `
           <select name="${catlevel1Name}" id="${catlevel1Id}" onchange="categorySelect(${catlevel1Id}, this)">
             <option value="" selected disabled hidden>${catlevel1Name}</option>
-            <option value="">All</option>
+            <option value="*">All</option>
           </select>
-        `;
+          `;
         fetch(
           "http://localhost:5000/dropdown?" +
             new URLSearchParams({ catlevel1Id: catlevel1Id }),
-          {
-            method: "GET",
-            mode: "cors",
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
+          connectionParams
         )
           .then((response) => response.json())
           .then((data) => {
-            cat_level_1_id_element = document.getElementById(catlevel1Id);
-            for (let i = 0; i < data.length; i++) {
-              let val = data[i]["name"];
-              cat_level_1_id_element.innerHTML += `
-                <option id="${val}" value="${val}">
-                  ${val}
-                </option>
-              `;
-            }
+            catLevel1IdElement = document.getElementById(catlevel1Id);
+            let newInnerHTML = data
+              .map((record) => {
+                let val = record["name"];
+                return `<option id="${val}" value="${val}">${val}</option>`;
+              })
+              .reduce((x, y) => x + y);
+            catLevel1IdElement.innerHTML += newInnerHTML;
           });
       }
     });
-};
-
-onload = navbarFunction();
+})();

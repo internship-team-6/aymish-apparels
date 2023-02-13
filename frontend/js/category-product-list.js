@@ -1,7 +1,31 @@
-const categoryProductListFunction = function () {
-  const queryString = location.search;
+var connectionParams = {
+  method: "GET",
+  mode: "cors",
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+};
+var limit = 15;
+
+const categorySelectSort = (sort) => {
+  let params = new URLSearchParams(window.location.search);
+  let catlevel1Id = params.get("catlevel1Id");
+  let catlevel2Name = params.get("catlevel2Name");
+  window.location.href =
+    "./category-product-list.html?" +
+    new URLSearchParams({
+      catlevel1Id: catlevel1Id,
+      catlevel2Name: catlevel2Name,
+      sort: sort.value,
+      page: 1,
+    });
+};
+
+window.onload = (() => {
+  const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const limit = 15;
   const page = parseInt(urlParams.get("page"));
   const offset = (page - 1) * limit;
   const catlevel1Id = urlParams.get("catlevel1Id");
@@ -18,69 +42,76 @@ const categoryProductListFunction = function () {
   document.getElementById(
     "cat-title"
   ).innerHTML = `${catlevel1Name}'s ${catlevel2Name}`;
-  const catSearchParams = new URLSearchParams({
-    catlevel1Id: catlevel1Id,
-    catlevel2Name: catlevel2Name,
-    sort: sort,
-  });
-  fetch("http://localhost:5000/category-product-list?" + catSearchParams, {
-    method: "GET",
-    mode: "cors",
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      Accept: "application/json",
-      "Content-Type": "application/json;charset=utf-8",
-    },
-  })
+  let catParamsMap = { catlevel1Id: catlevel1Id, catlevel2Name: catlevel2Name };
+  if (sort !== null && sort.length !== 0) {
+    catParamsMap["sort"] = sort;
+  }
+  fetch(
+    "http://localhost:5000/category-product-list?" +
+      new URLSearchParams(catParamsMap),
+    connectionParams
+  )
     .then((response) => response.json())
     .then((data) => {
-      const products_arr = data;
-      let prod_list_div = document.getElementById("product-list-div");
-      for (
-        let counter = offset;
-        counter < Math.min(offset + limit, products_arr.length);
-        counter++
-      ) {
-        let title = products_arr[counter]["title"];
-        let img = products_arr[counter]["image"];
-        let price = products_arr[counter]["price"];
-        let id = products_arr[counter]["id"];
-        prod_list_div.innerHTML += `
-          <div class="product-container" id="product-list-div" onclick = "window.open('product.html?uniqueId=${id}','_blank');">
+      const productsArr = data;
+      let prodListDiv = document.getElementById("product-list-div");
+      const newInnerHTML = productsArr
+        .slice(offset, Math.min(offset + limit, productsArr.length))
+        .map(
+          (product) => `
+          <div class="product-container" id="product-list-div" onclick = "window.open('product.html?uniqueId=${product["id"]}','_blank');">
             <div class="product-card">
               <div class="product-image">
-                <img src="${img}" class="product-thumb product-border" alt="" />
+                <img src="${product["image"]}" class="product-thumb product-border" alt="" />
               </div>
               <div class="product-info">
-                <p class="product-title">${title}</p>
-                <p class="price">$${price}</p>
+                <p class="product-title">${product["title"]}</p>
+                <p class="price">$${product["price"]}</p>
               </div>
             </div>
           </div>
-    `;
-      }
+          `
+        )
+        .reduce((x, y) => x + y);
+      prodListDiv.innerHTML += newInnerHTML;
       const pages =
-        Math.floor(products_arr.length / limit) +
-        (products_arr.length % limit && 1);
+        Math.floor(productsArr.length / limit) +
+        (productsArr.length % limit && 1);
       let paginationId = document.getElementById("pagination");
       if (page !== 1) {
-        let pageSearchParams = new URLSearchParams({ page: page - 1 });
-        paginationId.innerHTML += `<a href="./category-product-list.html?${catSearchParams}&${pageSearchParams}">&lt</a>&nbsp`;
+        let catParams = new URLSearchParams({
+          ...catParamsMap,
+          page: page - 1,
+        });
+        paginationId.innerHTML += `<a href="./category-product-list.html?${catParams}">&#10094;</a>`;
       }
-      for (let temp_page = 1; temp_page <= pages; temp_page++) {
-        let pageSearchParams = new URLSearchParams({ page: temp_page });
-        if (temp_page === page) {
-          console.log(temp_page);
-          paginationId.innerHTML += `<a class = "active" href="./category-product-list.html?${catSearchParams}&${pageSearchParams}">${temp_page}</a>`;
-        } else {
-          paginationId.innerHTML += `<a href="./category-product-list.html?${catSearchParams}&${pageSearchParams}">${temp_page}</a>`;
-        }
-      }
+      let paginationNewInnerHTMLArr = Array.from(
+        { length: pages },
+        (_, tempPage) => tempPage + 1
+      ).map((tempPage) => {
+        let catParams = new URLSearchParams({
+          ...catParamsMap,
+          page: tempPage,
+        });
+        return `<a href="./category-product-list.html?${catParams}">${tempPage}</a>`;
+      });
+      let catParams = new URLSearchParams({
+        ...catParamsMap,
+        page: page,
+      });
+      paginationNewInnerHTMLArr[
+        page - 1
+      ] = `<a class="active" href="./category-product-list.html?${catParams}">${page}</a>`;
+      let paginationNewInnerHTML = paginationNewInnerHTMLArr.reduce(
+        (x, y) => x + y
+      );
+      paginationId.innerHTML += paginationNewInnerHTML;
       if (page !== pages) {
-        let pageSearchParams = new URLSearchParams({ page: page + 1 });
-        paginationId.innerHTML += `<a href="./category-product-list.html?${catSearchParams}&${pageSearchParams}">&gt</a>&nbsp`;
+        let catParams = new URLSearchParams({
+          ...catParamsMap,
+          page: page + 1,
+        });
+        paginationId.innerHTML += `<a href="./category-product-list.html?${catParams}">&#10095;</a>`;
       }
     });
-};
-
-window.onload = categoryProductListFunction();
+})();

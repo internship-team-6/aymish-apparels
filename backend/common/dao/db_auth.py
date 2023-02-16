@@ -9,7 +9,6 @@ class DB_Auth:
         config_file = "./.config/db/config.yaml"
         with open(config_file) as cf:
             conn_dict = yaml.load(cf, Loader=SafeLoader)
-
         self.conn = psycopg.connect(
             "host={} dbname={} user={} password={} port={}".format(
                 conn_dict["host"],

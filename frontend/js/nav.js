@@ -14,13 +14,12 @@ const searchQuery = () => {
     "./search-product-list.html?" + new URLSearchParams({ q: q, page: 1 });
 };
 
-const categorySelect = (catlevel1Id, catlevel2NameObj) => {
-  const catlevel2Name = catlevel2NameObj.value;
+const categorySelect = (catlevel2NameObj) => {
+  const catlevel2Id = catlevel2NameObj.value;
   window.location.href =
     "./category-product-list.html?" +
     new URLSearchParams({
-      catlevel1Id: catlevel1Id,
-      catlevel2Name: catlevel2Name,
+      catlevel2Id: catlevel2Id,
       page: 1,
     });
 };
@@ -59,7 +58,7 @@ window.onload = (() => {
         let catlevel1Name = categoriesArr[counter]["name"];
         let catlevel1Id = categoriesArr[counter]["id"];
         catLevel1.innerHTML += `
-          <select name="${catlevel1Name}" id="${catlevel1Id}" onchange="categorySelect(${catlevel1Id}, this)">
+          <select name="${catlevel1Name}" id="${catlevel1Id}" onchange="categorySelect(this)">
             <option value="" selected disabled hidden>${catlevel1Name}</option>
             <option value="*">All</option>
           </select>
@@ -74,8 +73,9 @@ window.onload = (() => {
             catLevel1IdElement = document.getElementById(catlevel1Id);
             let newInnerHTML = data
               .map((record) => {
-                let val = record["name"];
-                return `<option id="${val}" value="${val}">${val}</option>`;
+                let val_id = record["id"];
+                let val_name = record["name"];
+                return `<option id="${val_id}" value="${val_id}">${val_name}</option>`;
               })
               .reduce((x, y) => x + y);
             catLevel1IdElement.innerHTML += newInnerHTML;

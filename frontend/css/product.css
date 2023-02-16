@@ -29,7 +29,7 @@ h3 {
 
 .details .product-brand {
     text-transform: capitalize;
-    font-size: 35px;   
+    font-size: 35px;
 }
 
 .details .product-title {
@@ -49,7 +49,7 @@ h3 {
 .product-des {
     color: #383838;
     line-height: 25px;
-    
+
 }
 
 #heading {

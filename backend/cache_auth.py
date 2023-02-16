@@ -13,4 +13,4 @@ class Cache_Auth:
             port=conn_dict["port"],
             decode_responses=conn_dict["decode_responses"],
         )
-        self.r=redis.Redis(connection_pool=self.pool)
+        self.r = redis.Redis(connection_pool=self.pool)

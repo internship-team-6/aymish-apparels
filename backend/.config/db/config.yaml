@@ -1,5 +1,5 @@
-host: "/tmp"
-dbname: "postgres"
-user: "unbxd"
-password: "unbxd"
+host: "database"
+dbname: "mydb"
+user: "manish"
+password: "manish"
 port: 5432

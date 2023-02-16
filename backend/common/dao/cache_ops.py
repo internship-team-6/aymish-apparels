@@ -1,4 +1,4 @@
-from cache_auth import Cache_Auth
+from common.dao.cache_auth import Cache_Auth
 import json
 
 

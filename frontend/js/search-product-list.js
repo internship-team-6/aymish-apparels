@@ -31,7 +31,9 @@ window.onload = (() => {
     q[0].toUpperCase() + q.slice(1)
   }`;
   document.getElementById("search-for").innerHTML = q;
-  document.getElementById("product-query").innerHTML = q == "*" ? "all" : q;
+  let modifiedQuery = q == "*" ? "all" : q;
+  document.getElementById("product-query").innerHTML = modifiedQuery;
+  document.title = "Search results for " + modifiedQuery;
   let searchParamsMap = { q: q };
   if (sort !== null && sort.length !== 0) {
     searchParamsMap["sort"] = sort;

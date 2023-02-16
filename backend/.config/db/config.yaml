@@ -1,5 +1,10 @@
-host: "database"
-dbname: "mydb"
-user: "manish"
-password: "manish"
+# host: "database"
+# dbname: "mydb"
+# user: "manish"
+# password: "manish"
+# port: 5432
+host: "/tmp"
+dbname: "postgres"
+user: "unbxd"
+password: "2020@Inf"
 port: 5432

@@ -29,7 +29,8 @@
 }
 
 .sort-box {
-    padding-left: 850px;
+    position: absolute;
+    right: 60px;
 }
 
 .sort-box select {
@@ -47,13 +48,22 @@
 .product-container {
     display: grid;
     grid-template-columns: auto auto auto;
-    grid-gap: 10px;
-    padding: 0 50px;
+    grid-gap: 30px;
+    padding: 0 40px;
+    /* box-shadow: 2px 2px 30px rgba(0,0,0,0.2); */
+    border-radius: 10px;
 }
 
 .product-card {
     cursor: pointer;
     margin-bottom: 20px;
+    width: auto;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.product-card img {
+    width: 80%;
 }
 
 .product-title,

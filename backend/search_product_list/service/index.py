@@ -10,11 +10,11 @@ class Service:
         with open(config_file) as cf:
             config_dict = yaml.load(cf, Loader=SafeLoader)
         self.api = config_dict["unbxd_search_api"]
-        self.rows_count = int(config_dict["rows_count"])
+        self.rows_limit = config_dict["rows_limit"]
         self.dao = DAO()
 
-    def select_product_list(self, q, sort_order):
-        params = {"q": q, "rows": self.rows_count}
+    def select_product_list(self, q, sort_order, page):
+        params = {"q": q, "rows": self.rows_limit, "page": page}
         if sort_order.lower() == "asc":
             params["sort"] = "price asc"
         elif sort_order.lower() == "desc":
@@ -22,6 +22,10 @@ class Service:
         resp = requests.get(self.api, params).json()
         prod_list = resp["response"]["products"]
 
+        product_count = resp["response"]["numberOfProducts"]
+        no_pages = product_count // self.rows_limit + (
+            product_count % self.rows_limit and 1
+        )
         product_list = []
 
         for counter in range(0, len(prod_list)):
@@ -58,4 +62,4 @@ class Service:
                     prod_cat_level_1_name,
                     prod_cat_level_2_name,
                 )
-        return product_list
+        return {"product_list": product_list, "pages": no_pages}

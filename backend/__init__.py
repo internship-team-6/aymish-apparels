@@ -4,4 +4,4 @@ from .ingestion import *
 from .navbar import *
 from .product import *
 from .common import *
-from .pagination import *
+from .category_pagination import *

@@ -6,7 +6,7 @@ class Service:
         self.dao = DAO()
 
     def select_product_list(self, cat_level_2_id, sort_order, page):
-        r_key = "category-product-list->{}->".format(cat_level_2_id, page)
+        r_key = "category-product-list->{}->{}".format(cat_level_2_id, page)
         if sort_order in ("asc", "desc"):
             r_key += "->{}".format(sort_order)
         product_list = self.dao.cache_ops.get(r_key)

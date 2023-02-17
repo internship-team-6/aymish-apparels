@@ -35,6 +35,11 @@ h3 {
     color: #383838;
 }
 
+.headline span {
+    font-size: x-large;
+    transition: 2s;
+}
+
 .details {
     width: 50%;
     /* padding-left: 40px; */
@@ -80,17 +85,16 @@ h3 {
     display: grid;
     grid-template-columns: auto auto auto auto;
     padding: 20px;
-    
+    margin: auto;
 }
 
 .product-card {
     cursor: pointer;
-    margin-bottom: 20px;
+    margin: auto;
+    width: auto;
     text-align: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    margin: auto;
-    width: 90%;
 }
 
 .product-image {
@@ -104,5 +108,5 @@ h3 {
 .product-title,
 .price {
     padding-top: 10px;
-    margin-right: -10px;
+    margin:0 10px;
 }

@@ -39,6 +39,38 @@ window.onload = (() => {
               ${description}
             </p>
           </div>`;
+
+      fetch(
+        `http://127.0.0.1:5000/recommendations?uniqueId=${uniqueId}`,
+        connectionParams
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          const pages = data["pages"];
+          let prodListDiv = document.getElementById("product-list-div");
+          const newInnerHTML = data
+            .map(
+              (product) => `
+                  <div class="product-recommend" id="product-list-div" onclick = "window.open('Product.html?uniqueId=${product["id"]}','_blank');">
+                    <div class="product-card">
+                      <div class="product-image">
+                        <img src="${product["image"]}" class="product-thumb product-border" alt="" />
+                      </div>
+                      <div class="product-info">
+                        <p class="product-title">${product["name"]}</p>
+                        <span class="price">$${product["price"]}</span>
+                      </div>
+                    </div>
+                  </div>
+                  `
+            )
+            .reduce((x, y) => x + y);
+          prodListDiv.innerHTML += newInnerHTML;
+        })
+        .catch((err) => {
+          console.log("caught it!", err);
+          window.location.href = "./404.html?";
+        });
     })
     .catch((err) => {
       console.log("caught it!", err);

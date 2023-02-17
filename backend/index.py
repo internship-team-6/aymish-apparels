@@ -16,6 +16,7 @@ from category_product_list.control.index import CategoryProductListControl
 from product.control.index import ProductControl
 from name_tree.control.index import NameTreeControl
 from category_pagination.control.index import CategoryPaginationControl
+from recommendations.control.index import RecommendationsControl
 
 app = Flask(__name__)
 CORS(app)
@@ -29,6 +30,7 @@ api.add_resource(CategoryProductListControl, "/category-product-list")
 api.add_resource(ProductControl, "/product")
 api.add_resource(NameTreeControl, "/name-tree")
 api.add_resource(CategoryPaginationControl, "/category-pagination")
+api.add_resource(RecommendationsControl, "/recommendations")
 
 
 if __name__ == "__main__":

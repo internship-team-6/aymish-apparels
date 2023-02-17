@@ -32,6 +32,9 @@ window.onload = (() => {
               ${title}
             </p>
             <span class="product-price">$${price}</span>
+            <br>
+            <br>
+            <h4>Product Description</h4>
             <p class="product-des">
               ${description}
             </p>

@@ -17,10 +17,13 @@ const searchQuerySort = (sort) => {
 };
 
 window.onload = (() => {
-  const queryString = location.search;
+  const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const page = parseInt(urlParams.get("page"));
   const sort = urlParams.get("sort");
+  if (page < 1) {
+    searchQuerySort(sort);
+  }
   let q = urlParams.get("q");
   q = q == "" ? "*" : q;
   document.getElementById(
@@ -36,7 +39,6 @@ window.onload = (() => {
   if (sort !== null && sort.length !== 0) {
     searchParamsMap["sort"] = sort;
   }
-  console.log(searchParamsMap);
   fetch(
     "http://localhost:5000/search?" + new URLSearchParams(searchParamsMap),
     connectionParams
@@ -45,32 +47,33 @@ window.onload = (() => {
     .then((data) => {
       const productsArr = data["product_list"];
       const pages = data["pages"];
+      if (page > pages) {
+        searchQuerySort(sort);
+      }
       let prodListDiv = document.getElementById("product-list-div");
       const newInnerHTML = productsArr
         .map(
           (product) => `
-          <div class="product-container" id="product-list-div" onclick = "window.open('Product.html?uniqueId=${product["id"]}','_blank');">
-            <div class="product-card">
-              <div class="product-image">
-                <img src="${product["image"]}" class="product-thumb product-border" alt="" />
-              </div>
-              <div class="product-info">
-                <p class="product-title">${product["title"]}</p>
-                <span class="price">$${product["price"]}</span>
+            <div class="product-container" id="product-list-div" onclick = "window.open('Product.html?uniqueId=${product["id"]}','_blank');">
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="${product["image"]}" class="product-thumb product-border" alt="" />
+                </div>
+                <div class="product-info">
+                  <p class="product-title">${product["title"]}</p>
+                  <span class="price">$${product["price"]}</span>
+                </div>
               </div>
             </div>
-          </div>
-      `
+            `
         )
         .reduce((x, y) => x + y);
       prodListDiv.innerHTML += newInnerHTML;
       let paginationId = document.getElementById("pagination");
       if (page !== 1) {
-        let searchParams = new URLSearchParams({
-          ...searchParamsMap,
-          page: page - 1,
-        });
-        paginationId.innerHTML += `<a href="./search-product-list.html?${searchParams}">&#10094;</a>`;
+        paginationId.innerHTML += `<a href="./search-product-list.html?${new URLSearchParams(
+          { ...searchParamsMap, page: page - 1 }
+        )}">&#10094;</a>`;
         paginationId.innerHTML += `<a href="./search-product-list.html?${new URLSearchParams(
           { ...searchParamsMap, page: 1 }
         )}">1</a>`;
@@ -84,11 +87,12 @@ window.onload = (() => {
             ...searchParamsMap,
             page: pages,
           })}">${pages}</a>`;
-        let searchParams = new URLSearchParams({
-          ...searchParamsMap,
-          page: page + 1,
-        });
-        paginationId.innerHTML += `<a href="./search-product-list.html?${searchParams}">&#10095;</a>`;
+        paginationId.innerHTML += `<a href="./search-product-list.html?${new URLSearchParams(
+          {
+            ...searchParamsMap,
+            page: page - 1,
+          }
+        )}">&#10095;</a>`;
       }
     });
 })();

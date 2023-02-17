@@ -33,7 +33,7 @@ window.onload = (() => {
         <div class="search">
           <form class="form-bar">
             <input type="text" class="search-box" id="searchid" placeholder="search brand, product"/>
-            <button class="search-btn" type="button" onclick="searchQuery()">search</button>
+            <button class="search-btn" type="button" onclick="searchQuery()"><i class="fa fa-search"></i></button>
           </form>
         </div>
         

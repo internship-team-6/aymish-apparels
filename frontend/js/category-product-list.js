@@ -26,9 +26,6 @@ window.onload = (() => {
   const page = parseInt(urlParams.get("page"));
   const catlevel2Id = urlParams.get("catlevel2Id");
   const sort = urlParams.get("sort");
-  if (page < 1) {
-    categorySelectSort(sort);
-  }
   fetch(
     "http://localhost:5000/category-pagination?" +
       new URLSearchParams({ catlevel2Id: catlevel2Id }),
@@ -37,9 +34,6 @@ window.onload = (() => {
     .then((response) => response.json())
     .then((data) => {
       let pages = parseInt(data);
-      if (page > pages) {
-        categorySelectSort(sort);
-      }
       fetch(
         "http://localhost:5000/name-tree?" +
           new URLSearchParams({ catlevel2Id: catlevel2Id }),
@@ -113,7 +107,19 @@ window.onload = (() => {
                   }
                 )}">&#10095;</a>`;
               }
+            })
+            .catch((err) => {
+              console.log("caught it!", err);
+              window.location.href = "./404.html?";
             });
+        })
+        .catch((err) => {
+          console.log("caught it!", err);
+          window.location.href = "./404.html?";
         });
+    })
+    .catch((err) => {
+      console.log("caught it!", err);
+      window.location.href = "./404.html?";
     });
 })();

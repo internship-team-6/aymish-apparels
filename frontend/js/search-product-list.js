@@ -21,9 +21,6 @@ window.onload = (() => {
   const urlParams = new URLSearchParams(queryString);
   const page = parseInt(urlParams.get("page"));
   const sort = urlParams.get("sort");
-  if (page < 1) {
-    searchQuerySort(sort);
-  }
   let q = urlParams.get("q");
   q = q == "" ? "*" : q;
   document.getElementById(
@@ -47,9 +44,6 @@ window.onload = (() => {
     .then((data) => {
       const productsArr = data["product_list"];
       const pages = data["pages"];
-      if (page > pages) {
-        searchQuerySort(sort);
-      }
       let prodListDiv = document.getElementById("product-list-div");
       const newInnerHTML = productsArr
         .map(
@@ -94,5 +88,9 @@ window.onload = (() => {
           }
         )}">&#10095;</a>`;
       }
+    })
+    .catch((err) => {
+      console.log("caught it!", err);
+      window.location.href = "./404.html?";
     });
 })();

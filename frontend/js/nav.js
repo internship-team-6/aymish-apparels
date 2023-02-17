@@ -79,7 +79,15 @@ window.onload = (() => {
               })
               .reduce((x, y) => x + y);
             catLevel1IdElement.innerHTML += newInnerHTML;
+          })
+          .catch((err) => {
+            console.log("caught it!", err);
+            window.location.href = "./404.html?";
           });
       }
+    })
+    .catch((err) => {
+      console.log("caught it!", err);
+      window.location.href = "./404.html?";
     });
 })();

@@ -42,7 +42,7 @@
     right: 0;
     text-align: center;
     border: 1px solid #383838;
-    border-radius: 10px;
+    border-radius: 30px;
 }
 
 .product-container {
@@ -54,11 +54,18 @@
 
 .product-card {
     cursor: pointer;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
     width: auto;
     text-align: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 10px;
+    transition: transform .2s;
+}
+
+.product-card:hover {
+    -ms-transform: scale(1.1); /* IE 9 */
+    -webkit-transform: scale(1.1); /* Safari 3-8 */
+    transform: scale(1.1);
 }
 
 .product-card img {

@@ -7,6 +7,6 @@ class RecommendationsControl(Resource):
         self.service=Service()
 
     def get(self):
-        product_name=request.args.get("productName")
-        product_list=self.service.select_recommended_product_list(product_name)
+        product_id=request.args.get("uniqueId")
+        product_list=self.service.select_recommended_product_list(product_id)
         return product_list

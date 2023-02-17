@@ -109,3 +109,6 @@ rows_count: 90
 
 * Product details page
 ![hello](./images/6.jpeg)
+
+* Product page with recommendations
+![hello](./images/7.png)

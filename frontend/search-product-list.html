@@ -1,39 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="search-for"></title>
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/product-list.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title id="search-for"></title>
-  <link rel="stylesheet" href="css/home.css" />
-  <link rel="stylesheet" href="css/product-list.css" />
-</head>
-
-<body>
-  <script src="js/variables.js"></script>
-  <nav id="navbar"></nav>
-  <div id="path"></div>
-  <section class="search-results">
-    <div class="head-cont">
-      <h2 class="heading">
-        search results for <span id="product-query"></span>
-      </h2>
-      <div class="sort-box" id="sort-box">
-        <select name="" id="sort-order-id" class="sort-by" onchange="searchQuerySort(this)">
-          <option value="" class="low-high" selected disabled hidden>
-            Sort By
-          </option>
-          <option value="asc" class="low-high">Price Low to High</option>
-          <option value="desc" class="low-high">Price High to Low</option>
-        </select>
+  <body>
+    <script src="js/variables.js"></script>
+    <nav id="navbar"></nav>
+    <div id="path"></div>
+    <section class="search-results">
+      <div class="head-cont">
+        <h2 class="heading">
+          search results for <span id="product-query"></span>
+        </h2>
+        <div class="sort-box" id="sort-box">
+          <select
+            name=""
+            id="sort-order-id"
+            class="sort-by"
+            onchange="searchQuerySort(this)"
+          >
+            <option value="" class="low-high" selected disabled hidden>
+              Sort By
+            </option>
+            <option value="asc" class="low-high">Price Low to High</option>
+            <option value="desc" class="low-high">Price High to Low</option>
+          </select>
+        </div>
       </div>
-    </div>
-    <div class="product-container" id="product-list-div"></div>
-  </section>
-  <div id="pagination"></div>
-  <script src="js/nav.js"></script>
-  <script src="js/search-product-list.js"></script>
-</body>
-
+      <div class="product-container" id="product-list-div"></div>
+    </section>
+    <div id="pagination"></div>
+    <script src="js/nav.js"></script>
+    <script src="js/search-product-list.js"></script>
+  </body>
 </html>

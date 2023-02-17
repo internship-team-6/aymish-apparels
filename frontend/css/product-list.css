@@ -30,7 +30,7 @@
 
 .sort-box {
     position: absolute;
-    right: 60px;
+    right: 110px;
 }
 
 .sort-box select {
@@ -48,10 +48,8 @@
 .product-container {
     display: grid;
     grid-template-columns: auto auto auto;
-    grid-gap: 30px;
     padding: 0 40px;
-    /* box-shadow: 2px 2px 30px rgba(0,0,0,0.2); */
-    border-radius: 10px;
+    margin: auto;
 }
 
 .product-card {
@@ -60,6 +58,7 @@
     width: auto;
     text-align: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
 }
 
 .product-card img {
@@ -69,7 +68,7 @@
 .product-title,
 .price {
     padding-top: 10px;
-    margin-right: -10px;
+    margin:0 10px;
 }
 
 #pagination {

@@ -55,10 +55,20 @@
     cursor: pointer;
     background: rgba(191, 97, 106, 0.7);
     color: #000000;
-    text-transform: capitalize;
     font-size: 16px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
 }
 
 .search-box::placeholder {

@@ -39,5 +39,9 @@ window.onload = (() => {
               ${description}
             </p>
           </div>`;
+    })
+    .catch((err) => {
+      console.log("caught it!", err);
+      window.location.href = "./404.html?";
     });
 })();

@@ -14,6 +14,11 @@ class DAO:
             SELECT id, name
             FROM product
         """
+        self.name_from_id_select = """
+            SELECT name
+            FROM product
+            WHERE id = %s
+        """
 
     def select_product_details_from_id(self, product_id):
         product_details_from_id=self.db_auth.conn.execute(self.product_details_from_id_select, (product_id,)).fetchone()
@@ -22,3 +27,7 @@ class DAO:
     def select_id_name_list_from_products(self):
         id_name_list_from_products = self.db_auth.conn.execute(self.id_name_list_from_products_select).fetchall()
         return id_name_list_from_products
+
+    def select_name_from_id(self, product_id):
+        name_from_id = self.db_auth.conn.execute(self.name_from_id_select, (product_id,)).fetchone()["name"]
+        return name_from_id

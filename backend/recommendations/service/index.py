@@ -19,7 +19,8 @@ class Service:
         self.similarity_matrix = cosine_similarity(name_matrix, name_matrix)
         self.mapping = pd.Series(self.product_df.index,index = self.product_df['name'])
 
-    def select_recommended_product_list(self, product_name):
+    def select_recommended_product_list(self, product_id):
+        product_name = self.dao.select_name_from_id(product_id)
         product_index = self.mapping[product_name]
         similarity_score = list(enumerate(self.similarity_matrix[product_index]))
         similarity_score = sorted(similarity_score, key=lambda x: x[1], reverse=True)

@@ -68,12 +68,10 @@ window.onload = (() => {
           prodListDiv.innerHTML += newInnerHTML;
         })
         .catch((err) => {
-          console.log("caught it!", err);
           window.location.href = "./404.html?";
         });
     })
     .catch((err) => {
-      console.log("caught it!", err);
       window.location.href = "./404.html?";
     });
 })();

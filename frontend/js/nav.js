@@ -60,7 +60,6 @@ window.onload = (() => {
         catLevel1.innerHTML += `
           <select name="${catlevel1Name}" id="${catlevel1Id}" onchange="categorySelect(this)">
             <option value="" selected disabled hidden>${catlevel1Name}</option>
-            <option value="*">All</option>
           </select>
           `;
         fetch(
@@ -81,13 +80,11 @@ window.onload = (() => {
             catLevel1IdElement.innerHTML += newInnerHTML;
           })
           .catch((err) => {
-            console.log("caught it!", err);
             window.location.href = "./404.html?";
           });
       }
     })
     .catch((err) => {
-      console.log("caught it!", err);
       window.location.href = "./404.html?";
     });
 })();

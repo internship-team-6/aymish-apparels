@@ -84,7 +84,7 @@ window.onload = (() => {
         paginationId.innerHTML += `<a href="./search-product-list.html?${new URLSearchParams(
           {
             ...searchParamsMap,
-            page: page - 1,
+            page: page + 1,
           }
         )}">&#10095;</a>`;
       }

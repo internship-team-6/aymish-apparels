@@ -46,12 +46,12 @@ window.onload = (() => {
             "path"
           ).innerHTML += `<a href="./index.html" style="text-decoration:none;color:#bf616a" margin-left=20px>Home</a>/${categoryPath}`;
           document.getElementById("product-query").innerHTML = categoryPath;
-          document.title = "Product list for category" + categoryPath;
           document.getElementById("cat-title").innerHTML = catlevel2Id;
           let catParamsMap = { catlevel2Id: catlevel2Id, page: page };
           if (sort !== null && sort.length !== 0) {
             catParamsMap["sort"] = sort;
           }
+          document.title = "Product list for category" + categoryPath;
           fetch(
             "http://localhost:5000/category-product-list?" +
               new URLSearchParams(catParamsMap),
@@ -109,17 +109,14 @@ window.onload = (() => {
               }
             })
             .catch((err) => {
-              console.log("caught it!", err);
               window.location.href = "./404.html?";
             });
         })
         .catch((err) => {
-          console.log("caught it!", err);
           window.location.href = "./404.html?";
         });
     })
     .catch((err) => {
-      console.log("caught it!", err);
       window.location.href = "./404.html?";
     });
 })();

@@ -6,10 +6,10 @@ services:
     build: ./frontend
     volumes:
       - ./frontend:/frontend
-    expose:
-      - 8080
     ports:
       - 8080:8080
+    expose:
+      - 8080
     depends_on:
       - backend
   backend:
@@ -20,27 +20,26 @@ services:
       - ./backend:/backend
     ports:
       - 5000:5000
+    expose:
+      - 5000
     depends_on:
-      - database
       - cache
+      - database
   database:
-    image: postgres:15-alpine
+    image: postgres
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_USER=manish
-      - POSTGRES_PASSWORD=manish
-      - POSTGRES_DB=mydb
-      - POSTGRES_HOST_AUTH_METHOD=trust
+      POSTGRES_USER: manish
+      POSTGRES_PASSWORD: manish
+      POSTGRES_DB: mydb
+      POSTGRES_HOST_AUTH_METHOD: trust
     restart: always
-    volumes:
-      - ./.postgres-data/postgres:/var/lib/postgresql/data
   cache:
     image: redis:7.0.8-alpine
     ports:
       - 6379:6379
+    environment:
+      REDIS_HOSTNAME: redis
     restart: always
-    volumes:
-      - ./.redis-data/:/data
-      - ./backend/.config/redis.conf/:/redis.conf
-    command: ["redis-server", "/redis.conf"]
+    command: ["redis-server"]

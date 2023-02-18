@@ -58,7 +58,6 @@ class DAO:
         return product_list_with_cat_level_2_id_price_asc
 
     def select_product_list_with_cat_level_2_id_price_desc(self, category_id, offset):
-        offset = (page - 1) * limit
         product_list_with_cat_level_2_id_price_desc = self.db_auth.conn.execute(
             self.product_list_with_cat_level_2_id_price_desc_select,
             (category_id, offset),

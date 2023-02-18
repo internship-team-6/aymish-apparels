@@ -1,6 +1,5 @@
-#!/bin/sh
-FROM python:3.9-alpine
+FROM python
 COPY . /backend
 WORKDIR /backend
 RUN pip install -r requirements.txt
-CMD ["python3", "./index.py"]
+CMD ["python3", "index.py"]

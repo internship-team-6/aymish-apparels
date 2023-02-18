@@ -12,6 +12,7 @@ class Cache_Ops:
     def set(self, key, deserialized_val_list):
         serialized_val_list = json.dumps(deserialized_val_list)
         self.cache_auth.r.set(key, serialized_val_list)
+        self.cache_auth.r.expire(key, 5)
 
     def get(self, key):
         if not self.exists(key):

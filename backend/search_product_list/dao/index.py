@@ -1,7 +1,7 @@
 from common.dao.db_auth import DB_Auth
 
 
-class DAO:
+class SearchProductListDAO:
     def __init__(self):
         self.db_auth = DB_Auth()
         self.category_table_insert = """

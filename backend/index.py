@@ -10,8 +10,8 @@ db_create.create_product_table_if_not_exists()
 
 from ingestion.control.index import IngestionControl
 from search_product_list.control.index import SearchProductListControl
-from navbar.control.index import NavBarControl
-from dropdown.control.index import DropDownControl
+from cat_level_1.control.index import CatLevel1Control
+from cat_level_2_with_parent_id.control.index import CatLevel2WithParentIdControl
 from category_product_list.control.index import CategoryProductListControl
 from product.control.index import ProductControl
 from name_tree.control.index import NameTreeControl
@@ -24,8 +24,8 @@ api = Api(app)
 
 api.add_resource(IngestionControl, "/ingestion")
 api.add_resource(SearchProductListControl, "/search")
-api.add_resource(NavBarControl, "/navbar")
-api.add_resource(DropDownControl, "/dropdown")
+api.add_resource(CatLevel1Control, "/cat-level-1")
+api.add_resource(CatLevel2WithParentIdControl, "/cat-level-2-with-parent-id")
 api.add_resource(CategoryProductListControl, "/category-product-list")
 api.add_resource(ProductControl, "/product")
 api.add_resource(NameTreeControl, "/name-tree")

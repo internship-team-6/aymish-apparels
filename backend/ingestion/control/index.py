@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from ingestion.service.index import Service
+from ingestion.service.index import IngestionService
 
 
 class IngestionControl(Resource):

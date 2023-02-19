@@ -1,11 +1,11 @@
-from name_tree.service.index import Service
 from flask_restful import Resource
 from flask import request
+from name_tree.service.index import NameTreeService
 
 
 class NameTreeControl(Resource):
     def __init__(self):
-        self.service = Service()
+        self.service = NameTreeService()
 
     def get(self):
         cat_level_2_id = request.args.get("catlevel2Id")

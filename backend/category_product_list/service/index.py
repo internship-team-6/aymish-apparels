@@ -1,9 +1,9 @@
-from category_product_list.dao.index import DAO
+from category_product_list.dao.index import CategoryProductListDAO
 
 
-class Service:
+class CategoryProductListService:
     def __init__(self):
-        self.dao = DAO()
+        self.dao = CategoryProductListDAO()
 
     def select_product_list(self, cat_level_2_id, sort_order, page):
         r_key = "category-product-list->{}->{}".format(cat_level_2_id, page)

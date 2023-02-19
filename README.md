@@ -15,18 +15,19 @@ Simple e-commerce website
     * **Database**: PostgreSQL
     * **Cache**: Redis
     * **External API**: Unbxd Search API
+    * **Containerization**: Docker
     
 # API Specs:
 * Retrieve level1 categories having subcategories
 ```
 GET-
-GET http://localhost:5000/navbar HTTP/1.1
+GET http://localhost:5000/cat-level-1 HTTP/1.1
 Host: localhost
 ```
 * Retrieve level2 categories belonging to level 1 category
 ```
 GET-
-GET http://localhost:5000/dropdown?catlevel1Id=1 HTTP/1.1
+GET http://localhost:5000/cat-level-2-with-parent-id?catlevel1Id=1 HTTP/1.1
 Host: localhost
 ```
 
@@ -47,7 +48,7 @@ Host: localhost
 * Retrieve products using search bar
 ```
 GET-
-GET http://localhost:5000/search?q=shirt&rows=90&order=asc HTTP/1.1
+GET http://localhost:5000/search?q=shirt&rows=90&order=asc&page=1 HTTP/1.1
 Host: localhost
 ```
 * Data ingestion
@@ -59,6 +60,9 @@ Host: localhost
 
 # Link to postman collection:
 https://api.postman.com/collections/25326353-5ea394d3-73c9-46ce-97a4-20af33abcd58?access_key=PMAT-01GRTFDM662MCJRDJHTJJCDSJP
+
+# API Documentation
+https://documenter.getpostman.com/view/25326353/2s93CHuavF
 
 # Config files:
 * Database
@@ -83,9 +87,9 @@ rows_count: 90
 
 # Running the services
 * Frontend
-    * currently running on port 5500 locally
+    * run at port 8080 via nginx-server
 * Backend
-    * running at port 5000 via flask
+    * run at port 5000 via flask
     * Data ingestion  
         ```
         curl -X POST -H "Content-Type: application/json" -d @out.json http://127.0.0.1:5000/ingestion
@@ -93,22 +97,22 @@ rows_count: 90
         
 # Screenshots
 * Home page
-![hello](./images/1.jpeg)
+![hello](./images/home.png)
 
 * Pagination
-![hello](./images/3.jpeg)
+![hello](./images/pagination.png)
 
 * Search products list page
-![hello](./images/4.jpeg)
+![hello](./images/search_product_list.png)
 
 * Category products list page (normal)
-![hello](./images/2.jpeg)
+![hello](./images/category_product_list.png)
 
 * Category products list page (sorted)
-![hello](./images/5.jpeg)
+![hello](./images/category_product_list_sorted.png)
 
 * Product details page
-![hello](./images/6.jpeg)
+![hello](./images/product_details.png)
 
 * Product page with recommendations
-![hello](./images/7.png)
+![hello](./images/recommendations.png)

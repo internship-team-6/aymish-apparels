@@ -7,7 +7,7 @@ from common.dao.cache_ops import Cache_Ops
 from common.dao.db_auth import DB_Auth
 
 
-class DAO:
+class NameTreeDAO:
     def __init__(self):
         self.db_auth = DB_Auth()
         self.cache_ops = Cache_Ops()

@@ -6,7 +6,7 @@ from common.dao.db_auth import DB_Auth
 from common.dao.cache_ops import Cache_Ops
 
 
-class DAO:
+class CategoryProductListDAO:
     def __init__(self):
         self.db_auth = DB_Auth()
         self.cache_ops = Cache_Ops()

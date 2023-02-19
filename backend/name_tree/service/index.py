@@ -1,9 +1,9 @@
-from name_tree.dao.index import DAO
+from name_tree.dao.index import NameTreeDAO
 
 
-class Service:
+class NameTreeService:
     def __init__(self):
-        self.dao = DAO()
+        self.dao = NameTreeDAO()
 
     def select_name_tree(self, cat_id):
         r_key = "name-tree->{}".format(cat_id)

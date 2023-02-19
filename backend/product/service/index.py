@@ -1,9 +1,9 @@
-from product.dao.index import DAO
+from product.dao.index import ProductDAO
 
 
-class Service:
+class ProductService:
     def __init__(self):
-        self.dao = DAO()
+        self.dao = ProductDAO()
 
     def select_product(self, product_id):
         r_key = "product->{}".format(product_id)

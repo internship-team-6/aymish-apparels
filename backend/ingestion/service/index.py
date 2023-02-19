@@ -1,9 +1,9 @@
-from ingestion.dao.index import DAO
+from ingestion.dao.index import IngestionDAO
 
 
-class Service:
+class IngestionService:
     def __init__(self):
-        self.dao = DAO()
+        self.dao = IngestionDAO()
 
     def insert_data(self, product_list):
         for product in product_list:

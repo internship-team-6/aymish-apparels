@@ -1,11 +1,11 @@
 from flask import request
 from flask_restful import Resource
-from dropdown.service.index import Service
+from cat_level_2_with_parent_id.service.index import CatLevel2WithParentIdService
 
 
-class DropDownControl(Resource):
+class CatLevel2WithParentIdControl(Resource):
     def __init__(self):
-        self.service = Service()
+        self.service = CatLevel2WithParentIdService()
 
     def get(self):
         cat_level_1_id = request.args.get("catlevel1Id")

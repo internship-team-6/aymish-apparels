@@ -1,5 +1,3 @@
-from recommendations.dao.index import DAO
-
 import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
@@ -8,10 +6,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 
+from recommendations.dao.index import RecommendationsDAO
 
-class Service:
+class RecommendationsService:
     def __init__(self):
-        self.dao=DAO()
+        self.dao=RecommendationsDAO()
         self.tf_idf = TfidfVectorizer(stop_words='english')
         product_list = self.dao.select_id_name_list_from_products()
         self.product_df = pd.DataFrame(product_list)

@@ -1,11 +1,11 @@
 from flask_restful import Resource
 from flask import request
-from category_product_list.service.index import Service
+from category_product_list.service.index import CategoryProductListService
 
 
 class CategoryProductListControl(Resource):
     def __init__(self):
-        self.service = Service()
+        self.service = CategoryProductListService()
 
     def get(self):
         cat_level_2_id = request.args.get("catlevel2Id")

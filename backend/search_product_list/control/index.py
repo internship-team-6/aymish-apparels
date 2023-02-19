@@ -1,11 +1,11 @@
 from flask_restful import Resource
 from flask import request
-from search_product_list.service.index import Service
+from search_product_list.service.index import SearchProductListService
 
 
 class SearchProductListControl(Resource):
     def __init__(self):
-        self.service = Service()
+        self.service = SearchProductListService()
 
     def get(self):
         sort_order = request.args.get("sort", "")

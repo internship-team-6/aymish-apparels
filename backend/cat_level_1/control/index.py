@@ -1,10 +1,10 @@
 from flask_restful import Resource
-from navbar.service.index import Service
+from cat_level_1.service.index import CatLevel1Service
 
 
-class NavBarControl(Resource):
+class CatLevel1Control(Resource):
     def __init__(self):
-        self.service = Service()
+        self.service = CatLevel1Service()
 
     def get(self):
         categories = self.service.select_categories()

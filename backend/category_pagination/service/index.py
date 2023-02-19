@@ -1,9 +1,9 @@
-from category_pagination.dao.index import DAO
+from category_pagination.dao.index import CategoryPaginationDAO
 
 
-class Service:
+class CategoryPaginationService:
     def __init__(self):
-        self.dao = DAO()
+        self.dao = CategoryPaginationDAO()
         self.limit = 15
 
     def pages_count(self, cat_level_2_id):

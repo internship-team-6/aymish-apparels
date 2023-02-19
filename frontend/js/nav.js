@@ -49,7 +49,7 @@ window.onload = (() => {
       searchQuery();
     }
   });
-  fetch("http://localhost:5000/navbar", connectionParams)
+  fetch("http://localhost:5000/cat-level-1", connectionParams)
     .then((response) => response.json())
     .then((data) => {
       const categoriesArr = data;
@@ -63,7 +63,7 @@ window.onload = (() => {
           </select>
           `;
         fetch(
-          "http://localhost:5000/dropdown?" +
+          "http://localhost:5000/cat-level-2-with-parent-id?" +
             new URLSearchParams({ catlevel1Id: catlevel1Id }),
           connectionParams
         )

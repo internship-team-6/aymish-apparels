@@ -4,8 +4,6 @@ services:
     container_name: aymish_frontend
     restart: always
     build: ./frontend
-    volumes:
-      - ./frontend:/frontend
     ports:
       - 8080:8080
     expose:
@@ -16,8 +14,6 @@ services:
     container_name: aymish_backend
     restart: always
     build: ./backend
-    volumes:
-      - ./backend:/backend
     ports:
       - 5000:5000
     expose:
@@ -26,13 +22,14 @@ services:
       - cache
       - database
   database:
-    image: postgres
+    image: postgres:15-alpine
+    container_name: aymish_db
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: manish
-      POSTGRES_PASSWORD: manish
-      POSTGRES_DB: mydb
+      POSTGRES_USER: aymish
+      POSTGRES_PASSWORD: aymish
+      POSTGRES_DB: apparels
       POSTGRES_HOST_AUTH_METHOD: trust
     restart: always
   cache:

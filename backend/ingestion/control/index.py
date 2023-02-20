@@ -5,7 +5,7 @@ from ingestion.service.index import IngestionService
 
 class IngestionControl(Resource):
     def __init__(self):
-        self.service = Service()
+        self.service = IngestionService()
 
     def post(self):
         product_list = request.json

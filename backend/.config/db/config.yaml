@@ -1,5 +1,5 @@
-host: "database"
-dbname: "mydb"
-user: "manish"
-password: "manish"
+host: "aymish_db"
+dbname: "apparels"
+user: "aymish"
+password: "aymish"
 port: 5432

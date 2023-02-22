@@ -4,8 +4,12 @@ from common.dao.cache_ops import Cache_Ops
 
 class CatLevel1DAO:
     def __init__(self):
+        # object for performing operations on database
         self.db_auth = DB_Auth()
+        
+        # object for performing operations on cache
         self.cache_ops = Cache_Ops()
+
         self.cat_level_1_name_id_list_select = """
             SELECT name, id
             FROM category

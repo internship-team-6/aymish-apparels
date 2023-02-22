@@ -1,3 +1,4 @@
+// parameters to connect while using the fetch promise on any given url
 var connectionParams = {
   method: "GET",
   mode: "cors",
@@ -8,12 +9,14 @@ var connectionParams = {
   },
 };
 
+// function to navigate to search-product-list page
 const searchQuery = () => {
   const q = document.getElementById("searchid").value;
   window.location.href =
     "./search-product-list.html?" + new URLSearchParams({ q: q, page: 1 });
 };
 
+// function to navigate to category-product-list page
 const categorySelect = (catlevel2NameObj) => {
   const catlevel2Id = catlevel2NameObj.value;
   window.location.href =
@@ -42,6 +45,8 @@ window.onload = (() => {
     <div class="cat" id="cat-level-1">
     </div>
     `;
+  
+  // navigate to search-product-list page upon hitting 'enter' key in search bar
   let searchIdInput = document.getElementById("searchid");
   searchIdInput.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
@@ -49,10 +54,14 @@ window.onload = (() => {
       searchQuery();
     }
   });
+
+  // get level 1 category items list to display on the navbar
   fetch("http://localhost:5000/cat-level-1", connectionParams)
     .then((response) => response.json())
     .then((data) => {
       const categoriesArr = data;
+      
+      // update navbar
       let catLevel1 = document.getElementById("cat-level-1");
       for (let counter = 0; counter < categoriesArr.length; counter++) {
         let catlevel1Name = categoriesArr[counter]["name"];
@@ -62,6 +71,8 @@ window.onload = (() => {
             <option value="" selected disabled hidden>${catlevel1Name}</option>
           </select>
           `;
+
+        // get level 2 category items list given it's parent category id
         fetch(
           "http://localhost:5000/cat-level-2-with-parent-id?" +
             new URLSearchParams({ catlevel1Id: catlevel1Id }),
@@ -69,6 +80,8 @@ window.onload = (() => {
         )
           .then((response) => response.json())
           .then((data) => {
+
+            // update dropdown with category names for each parent category
             catLevel1IdElement = document.getElementById(catlevel1Id);
             let newInnerHTML = data
               .map((record) => {

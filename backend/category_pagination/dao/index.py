@@ -8,7 +8,10 @@ from common.dao.cache_ops import Cache_Ops
 
 class CategoryPaginationDAO:
     def __init__(self):
+        # object for performing operations on database
         self.db_auth = DB_Auth()
+
+        # object for performing operations on cache
         self.cache_ops = Cache_Ops()
         self.count_product_list_with_cat_level_2_id_select = """
             SELECT COUNT(*)

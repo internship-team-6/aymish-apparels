@@ -1,3 +1,4 @@
+// parameters to connect while using the fetch promise on any given url
 var connectionParams = {
   method: "GET",
   mode: "cors",
@@ -8,6 +9,7 @@ var connectionParams = {
   },
 };
 
+// function to navigate to category-product-list page based on the provided sort order
 const categorySelectSort = (sort) => {
   let params = new URLSearchParams(window.location.search);
   let catlevel2Id = params.get("catlevel2Id");
@@ -22,10 +24,14 @@ const categorySelectSort = (sort) => {
 
 window.onload = (() => {
   const queryString = window.location.search;
+  
+  // get values for parameters
   const urlParams = new URLSearchParams(queryString);
   const page = parseInt(urlParams.get("page"));
   const catlevel2Id = urlParams.get("catlevel2Id");
   const sort = urlParams.get("sort");
+
+  // get no. of pages for the given category 
   fetch(
     "http://localhost:5000/category-pagination?" +
       new URLSearchParams({ catlevel2Id: catlevel2Id }),
@@ -34,6 +40,8 @@ window.onload = (() => {
     .then((response) => response.json())
     .then((data) => {
       let pages = parseInt(data);
+
+      // get tree of names for category and its parent categories in bottom-up manner 
       fetch(
         "http://localhost:5000/name-tree?" +
           new URLSearchParams({ catlevel2Id: catlevel2Id }),
@@ -52,6 +60,8 @@ window.onload = (() => {
             catParamsMap["sort"] = sort;
           }
           document.title = "Product list for category" + categoryPath;
+
+          // get list of products belonging to the given category
           fetch(
             "http://localhost:5000/category-product-list?" +
               new URLSearchParams(catParamsMap),
@@ -60,6 +70,8 @@ window.onload = (() => {
             .then((response) => response.json())
             .then((data) => {
               const productsArr = data;
+
+              // update page with product details
               let prodListDiv = document.getElementById("product-list-div");
               const newInnerHTML = productsArr
                 .map(
@@ -79,6 +91,8 @@ window.onload = (() => {
                 )
                 .reduce((x, y) => x + y);
               prodListDiv.innerHTML += newInnerHTML;
+
+              // update page with pagination indicators
               let paginationId = document.getElementById("pagination");
               if (page !== 1) {
                 paginationId.innerHTML += `<a href="./category-product-list.html?${new URLSearchParams(

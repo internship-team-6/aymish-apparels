@@ -8,9 +8,12 @@ class CategoryProductListControl(Resource):
         self.service = CategoryProductListService()
 
     def get(self):
+        # obtain parameters
         cat_level_2_id = request.args.get("catlevel2Id")
         sort_order = request.args.get("sort", "")
         page = int(request.args.get("page"))
+        
+        # get list of products belonging to the given category id
         category_product_list = self.service.select_product_list(
             cat_level_2_id, sort_order, page
         )

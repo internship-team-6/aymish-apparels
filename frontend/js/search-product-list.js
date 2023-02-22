@@ -1,3 +1,4 @@
+// parameters to connect while using the fetch promise on any given url
 var connectionParams = {
   method: "GET",
   mode: "cors",
@@ -8,6 +9,7 @@ var connectionParams = {
   },
 };
 
+// function to navigate to search-product-list page based on the provided sort order
 const searchQuerySort = (sort) => {
   let params = new URLSearchParams(window.location.search);
   let q = params.get("q");
@@ -18,6 +20,8 @@ const searchQuerySort = (sort) => {
 
 window.onload = (() => {
   const queryString = window.location.search;
+  
+  // obtain parameters
   const urlParams = new URLSearchParams(queryString);
   const page = parseInt(urlParams.get("page"));
   const sort = urlParams.get("sort");
@@ -36,6 +40,7 @@ window.onload = (() => {
   if (sort !== null && sort.length !== 0) {
     searchParamsMap["sort"] = sort;
   }
+  // get list of products belonging to the given query along with total no. of pages
   fetch(
     "http://localhost:5000/search?" + new URLSearchParams(searchParamsMap),
     connectionParams
@@ -44,11 +49,13 @@ window.onload = (() => {
     .then((data) => {
       const productsArr = data["product_list"];
       const pages = data["pages"];
+
+      // update page with product details
       let prodListDiv = document.getElementById("product-list-div");
       const newInnerHTML = productsArr
         .map(
           (product) => `
-            <div class="product-container" id="product-list-div" onclick = "window.open('Product.html?uniqueId=${product["id"]}','_blank');">
+            <div class="product-container" id="product-list-div" onclick = "window.open('product.html?uniqueId=${product["id"]}','_blank');">
               <div class="product-card">
                 <div class="product-image">
                   <img src="${product["image"]}" class="product-thumb product-border" alt="" />
@@ -63,6 +70,8 @@ window.onload = (() => {
         )
         .reduce((x, y) => x + y);
       prodListDiv.innerHTML += newInnerHTML;
+
+      // update page with pagination indicators
       let paginationId = document.getElementById("pagination");
       if (page !== 1) {
         paginationId.innerHTML += `<a href="./search-product-list.html?${new URLSearchParams(

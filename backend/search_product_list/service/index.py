@@ -4,7 +4,11 @@ from search_product_list.dao.index import SearchProductListDAO
 
 class SearchProductListService:
     def __init__(self):
+
+        # api (unbxd search api)
         self.api = "https://search.unbxd.io/fb853e3332f2645fac9d71dc63e09ec1/demo-unbxd700181503576558/search"
+
+        # rows limit
         self.rows_limit = 15
         self.dao = SearchProductListDAO()
 
@@ -18,6 +22,8 @@ class SearchProductListService:
         prod_list = resp["response"]["products"]
 
         product_count = resp["response"]["numberOfProducts"]
+        
+        # logic for calculating no. of pages from no. of products
         no_pages = product_count // self.rows_limit + (
             product_count % self.rows_limit and 1
         )
@@ -45,6 +51,8 @@ class SearchProductListService:
                     "price": prod_price,
                 }
             )
+            
+            # if product not present in database, insert to database (helps in recommendation)
             if prod_cat_level_2_name:
                 self.dao.insert(
                     prod_id,

@@ -3,8 +3,13 @@ from common.dao.db_auth import DB_Auth
 
 class RecommendationsDAO:
     def __init__(self):
-        self.cache_ops=Cache_Ops()
+
+        # object to perform operations on database
         self.db_auth=DB_Auth()
+
+        # object to perform operations on cache
+        self.cache_ops=Cache_Ops()
+
         self.product_details_from_id_select = """
             SELECT id, name, image, price, description
             FROM product

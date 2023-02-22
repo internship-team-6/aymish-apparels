@@ -3,7 +3,9 @@ from common.dao.db_auth import DB_Auth
 
 class SearchProductListDAO:
     def __init__(self):
+        # object to perform operations on database
         self.db_auth = DB_Auth()
+
         self.category_table_insert = """
             INSERT INTO category (name, level, parentid)
             VALUES (%s, %s, %s)

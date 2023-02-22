@@ -1,3 +1,4 @@
+// parameters to connect while using the fetch promise on any given url
 var connectionParams = {
   method: "GET",
   mode: "cors",
@@ -11,8 +12,12 @@ var connectionParams = {
 window.onload = (() => {
   var prodDiv = document.getElementById("product-details");
   const queryString = window.location.search;
+
+  // get values for parameters
   const urlParams = new URLSearchParams(queryString);
   const uniqueId = urlParams.get("uniqueId");
+
+  // get product details for given id
   fetch(`http://127.0.0.1:5000/product?uniqueId=${uniqueId}`, connectionParams)
     .then((response) => response.json())
     .then((data) => {
@@ -21,6 +26,8 @@ window.onload = (() => {
       const image = productMap["image"];
       const price = productMap["price"];
       const description = productMap["description"];
+      
+      // update page with product details
       document.getElementById("prod-title").innerHTML = title;
       document.getElementById("prod-name").innerHTML = title;
       prodDiv.innerHTML += `
@@ -40,6 +47,7 @@ window.onload = (() => {
             </p>
           </div>`;
 
+      // get recommendations for selected product
       fetch(
         `http://127.0.0.1:5000/recommendations?uniqueId=${uniqueId}`,
         connectionParams
@@ -47,11 +55,13 @@ window.onload = (() => {
         .then((response) => response.json())
         .then((data) => {
           const pages = data["pages"];
+          
+          // update page with recommendations
           let prodListDiv = document.getElementById("product-list-div");
           const newInnerHTML = data
             .map(
               (product) => `
-                  <div class="product-recommend" id="product-list-div" onclick = "window.open('Product.html?uniqueId=${product["id"]}','_blank');">
+                  <div class="product-recommend" id="product-list-div" onclick = "window.open('product.html?uniqueId=${product["id"]}','_blank');">
                     <div class="product-card">
                       <div class="product-image">
                         <img src="${product["image"]}" class="product-thumb product-border" alt="" />

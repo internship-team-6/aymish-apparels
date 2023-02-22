@@ -8,6 +8,9 @@ class ProductControl(Resource):
         self.service = ProductService()
 
     def get(self):
+        # obtain parameters
         product_id = request.args.get("uniqueId")
+
+        # get product details for given product id
         product_details = self.service.select_product(product_id)
         return product_details

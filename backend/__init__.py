@@ -5,3 +5,8 @@ from .navbar import *
 from .product import *
 from .common import *
 from .category_pagination import *
+from .cat_level_1 import *
+from .cat_level_2_with_parent_id import *
+from .name_tree import *
+from .recommendations import *
+from .search_product_list import *

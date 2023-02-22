@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  name: aymish-apparels-default
+spec:
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              io.kompose.network/aymish-apparels-default: "true"
+  podSelector:
+    matchLabels:
+      io.kompose.network/aymish-apparels-default: "true"

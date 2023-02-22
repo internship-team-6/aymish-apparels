@@ -1,16 +1,11 @@
-import yaml
-from yaml.loader import SafeLoader
 import requests
 from search_product_list.dao.index import SearchProductListDAO
 
 
 class SearchProductListService:
     def __init__(self):
-        config_file = "./.config/search/config.yaml"
-        with open(config_file) as cf:
-            config_dict = yaml.load(cf, Loader=SafeLoader)
-        self.api = config_dict["unbxd_search_api"]
-        self.rows_limit = config_dict["rows_limit"]
+        self.api = "https://search.unbxd.io/fb853e3332f2645fac9d71dc63e09ec1/demo-unbxd700181503576558/search"
+        self.rows_limit = 15
         self.dao = SearchProductListDAO()
 
     def select_product_list(self, q, sort_order, page):

@@ -1,4 +1,4 @@
-FROM nginx:1.23.3-alpine
+FROM nginx
 COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY . /frontend
 WORKDIR /frontend

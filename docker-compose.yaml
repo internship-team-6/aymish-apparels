@@ -1,42 +1,43 @@
 version: "3.8"
 services:
-  frontend:
-    container_name: aymish_frontend
-    restart: always
-    build: ./frontend
-    ports:
-      - 8080:8080
-    expose:
-      - 8080
-    depends_on:
-      - backend
-  backend:
-    container_name: aymish_backend
-    restart: always
-    build: ./backend
-    ports:
-      - 5000:5000
-    expose:
-      - 5000
-    depends_on:
-      - cache
-      - database
-  database:
-    image: postgres:15-alpine
-    container_name: aymish_db
+  postgres:
+    image: postgres
+    container_name: postgres
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: aymish
-      POSTGRES_PASSWORD: aymish
-      POSTGRES_DB: apparels
+      POSTGRES_USER: manish
+      POSTGRES_PASSWORD: manish
+      POSTGRES_DB: postgres
+      POSTGRES_PORT: 5432
       POSTGRES_HOST_AUTH_METHOD: trust
     restart: always
-  cache:
-    image: redis:7.0.8-alpine
+  redis:
+    image: redis
     ports:
       - 6379:6379
     environment:
       REDIS_HOSTNAME: redis
     restart: always
-    command: ["redis-server"]
+    command: [ "redis-server" ]
+  backend:
+    container_name: backend
+    restart: always
+    image: manish09/backend
+    depends_on:
+      - redis
+      - postgres
+    ports:
+      - 5000:5000
+    expose:
+      - 5000
+  frontend:
+    container_name: frontend
+    restart: always
+    image: manish09/frontend
+    depends_on:
+      - backend
+    ports:
+      - 8080:8080
+    expose:
+      - 8080

@@ -11,7 +11,9 @@ class CategoryProductListService:
             r_key += "->{}".format(sort_order)
         product_list = self.dao.cache_ops.get(r_key)
         if product_list is None:
+            # logic for calculating offset (i.e. no. of items to be skipped from the beginning)
             offset = (page - 1) * self.dao.get_limit()
+
             if sort_order == "asc":
                 product_list = (
                     self.dao.select_product_list_with_cat_level_2_id_price_asc(

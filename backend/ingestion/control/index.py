@@ -8,6 +8,7 @@ class IngestionControl(Resource):
         self.service = IngestionService()
 
     def post(self):
+        # extract data sent from the vendor
         product_list = request.json
         self.service.insert_data(product_list)
         return True

@@ -8,7 +8,10 @@ class CatLevel2WithParentIdControl(Resource):
         self.service = CatLevel2WithParentIdService()
 
     def get(self):
+        # obtain parameters
         cat_level_1_id = request.args.get("catlevel1Id")
+        
+        # get list of categories having level 2 given parent id
         cat_level_2_list = self.service.select_cat_level_2_list_with_parent_id(
             cat_level_1_id
         )

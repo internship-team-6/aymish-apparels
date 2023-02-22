@@ -9,7 +9,10 @@ from common.dao.db_auth import DB_Auth
 
 class NameTreeDAO:
     def __init__(self):
+        # object for performing operations on database
         self.db_auth = DB_Auth()
+
+        # object for performing operations on cache
         self.cache_ops = Cache_Ops()
         self.category_name_from_id_select = """
             SELECT name

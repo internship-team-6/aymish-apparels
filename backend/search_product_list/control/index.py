@@ -8,8 +8,10 @@ class SearchProductListControl(Resource):
         self.service = SearchProductListService()
 
     def get(self):
+        # obtain parameters
         sort_order = request.args.get("sort", "")
         q = request.args.get("q", "*")
         page = request.args.get("page")
+        
         search_product_list = self.service.select_product_list(q, sort_order, page)
         return search_product_list

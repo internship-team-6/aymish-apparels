@@ -5,6 +5,8 @@ from flask_cors import CORS
 from common.dao.db_create import DB_Create
 
 db_create = DB_Create()
+
+# create tables if not existing
 db_create.create_category_table_if_not_exists()
 db_create.create_product_table_if_not_exists()
 
@@ -19,9 +21,14 @@ from category_pagination.control.index import CategoryPaginationControl
 from recommendations.control.index import RecommendationsControl
 
 app = Flask(__name__)
+
+# to enable cross-origin resource sharing
 CORS(app)
+
+# in order to ensure that the app adheres to RESTful principles
 api = Api(app)
 
+# add apis for the respective classes
 api.add_resource(IngestionControl, "/ingestion")
 api.add_resource(SearchProductListControl, "/search")
 api.add_resource(CatLevel1Control, "/cat-level-1")
@@ -33,5 +40,7 @@ api.add_resource(CategoryPaginationControl, "/category-pagination")
 api.add_resource(RecommendationsControl, "/recommendations")
 
 
+# host="0.0.0.0" enables the server to be exposed to all the other services and in turn call the apis
+# useful while implementing across multiple containers with docker
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")

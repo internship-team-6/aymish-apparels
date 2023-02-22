@@ -4,8 +4,12 @@ from common.dao.cache_ops import Cache_Ops
 
 class IngestionDAO:
     def __init__(self):
+        # object to perform operations on database
         self.db_auth = DB_Auth()
+
+        # object to perform operations on cache
         self.cache_ops = Cache_Ops()
+        
         self.category_table_insert = """
             INSERT INTO category (name, level, parentid)
             VALUES (%s, %s, %s)
